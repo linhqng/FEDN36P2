@@ -4,6 +4,9 @@ bin-release/
 [Oo]bj/
 
 
+/backend/node_modules
+/frontend/node_modules
+
 # Other files and folders
 .settings/
 
