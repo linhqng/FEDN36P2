@@ -6,6 +6,7 @@ var logger = require("morgan");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var movieRouter = require("./routes/movie");
+var cinemaRouter = require("./routes/cinemas");
 var cors = require("cors");
 var app = express();
 var mongoose = require("mongoose");
@@ -33,12 +34,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
-
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/movies", movieRouter);
-
+app.use("/cinemas", cinemaRouter);
 
 module.exports = app;
