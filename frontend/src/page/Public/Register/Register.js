@@ -12,14 +12,21 @@ import {
   Typography,
 } from "@material-ui/core";
 import { ArrowBack as ArrowBackIcon } from "@material-ui/icons";
+import { withFormik } from "formik";
+import * as Yup from "yup";
 
-const Register = ({ classes, history }) => {
-  const [newUser, setNewUser] = useState({});
-  const handleFieldChange = (field, value) => {
-    const newState = { ...newUser };
-    newState[field] = value;
-    setNewUser(newState);
-  };
+const Register = ({
+  classes,
+  history,
+  values,
+  errors,
+  touched,
+  handleChange,
+  handleBlur,
+  isValid,
+  dirty,
+  handleSubmit,
+}) => {
   return (
     <div className={classes.root}>
       <Grid className={classes.grid} container>
@@ -39,7 +46,7 @@ const Register = ({ classes, history }) => {
               </IconButton>
             </div>
             <div className={classes.contentBody}>
-              <form className={classes.form}>
+              <form className={classes.form} onSubmit={handleSubmit}>
                 <Typography className={classes.title} variant="h2">
                   Create new account
                 </Typography>
@@ -52,68 +59,89 @@ const Register = ({ classes, history }) => {
                     label="Full name"
                     name="name"
                     variant="outlined"
-                    onChange={(event) =>
-                      handleFieldChange("name", event.target.value)
+                    onChange={handleChange}
+                    value={values.name}
+                    error={errors.name && touched.name ? true : false}
+                    helperText={
+                      errors.name && touched.name ? errors.name : null
                     }
-                    value={newUser.name}
+                    onBlur={handleBlur}
                   />
                   <TextField
                     className={classes.textField}
                     label="User name"
                     name="username"
                     variant="outlined"
-                    onChange={(event) =>
-                      handleFieldChange("username", event.target.value)
+                    onChange={handleChange}
+                    value={values.username}
+                    error={errors.username && touched.username ? true : false}
+                    helperText={
+                      errors.username && touched.username
+                        ? errors.username
+                        : null
                     }
-                    value={newUser.username}
+                    onBlur={handleBlur}
                   />
                   <TextField
                     className={classes.textField}
                     label="Email address"
                     name="email"
                     variant="outlined"
-                    onChange={(event) =>
-                      handleFieldChange("email", event.target.value)
+                    onChange={handleChange}
+                    value={values.email}
+                    error={errors.email && touched.email ? true : false}
+                    helperText={
+                      errors.email && touched.email ? errors.email : null
                     }
-                    value={newUser.email}
+                    onBlur={handleBlur}
                   />
                   <TextField
                     className={classes.textField}
                     label="Mobile Phone"
                     name="phone"
                     variant="outlined"
-                    onChange={(event) =>
-                      handleFieldChange("phone", event.target.value)
+                    onChange={handleChange}
+                    value={values.phone}
+                    error={errors.phone && touched.phone ? true : false}
+                    helperText={
+                      errors.phone && touched.phone ? errors.phone : null
                     }
-                    value={newUser.phone}
+                    onBlur={handleBlur}
                   />
                   <TextField
                     className={classes.textField}
                     label="Password"
                     type="password"
+                    name="password"
                     variant="outlined"
-                    onChange={(event) =>
-                      handleFieldChange("password", event.target.value)
+                    onChange={handleChange}
+                    value={values.password}
+                    error={errors.password && touched.password ? true : false}
+                    helperText={
+                      errors.password && touched.password
+                        ? errors.password
+                        : null
                     }
-                    value={newUser.password}
+                    onBlur={handleBlur}
                   />
                   <FileUpload
                     className={classes.upload}
-                    file={newUser.image}
-                    onUpload={(event) => {
-                      const file = event.target.files[0];
-                      handleFieldChange("image", file);
-                    }}
+                    file={values.image}
+                    name="image"
+                    onUpload={handleChange}
                   />
                   <div className={classes.policy}>
                     <Checkbox
                       className={classes.policyCheckbox}
                       color="primary"
                       name="policy"
-                      checked={newUser.policy}
-                      onChange={() =>
-                        handleFieldChange("policy", !newUser.policy)
+                      checked={values.policy}
+                      onChange={handleChange}
+                      error={errors.policy && touched.policy ? true : false}
+                      helperText={
+                        errors.policy && touched.policy ? errors.policy : null
                       }
+                      onBlur={handleBlur}
                     />
                     <Typography className={classes.policyText} variant="body1">
                       I have read the &nbsp;
@@ -129,6 +157,8 @@ const Register = ({ classes, history }) => {
                   color="primary"
                   size="large"
                   variant="contained"
+                  disabled={!isValid || !dirty}
+                  type="submit"
                 >
                   Register now
                 </Button>
@@ -148,4 +178,46 @@ const Register = ({ classes, history }) => {
   );
 };
 
-export default withStyles(styles)(Register);
+export default withStyles(styles)(
+  withFormik({
+    mapPropsToValues() {
+      return {
+        name: "",
+        username: "",
+        email: "",
+        phone: "",
+        password: "",
+        image: null,
+        policy: false,
+      };
+    },
+    validationSchema: Yup.object().shape({
+      // Validate form field
+      name: Yup.string()
+        .required("Name is required")
+        .min(5, "Name must have min 5 characters"),
+      username: Yup.string()
+        .required("Username is required")
+        .min(5, "Username must have min 5 characters")
+        .max(16, "Username have max 16 characters"),
+      email: Yup.string()
+        .email("Email is invalid")
+        .required("Email is required"),
+      phone: Yup.string()
+        .matches(/^(0)+([0-9]{9})\b$/, "Phone number is not valid !")
+        .required("Phone number is required"),
+      password: Yup.string()
+        .matches(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+          "Password must have minimum 8 characters, at least one uppercase letter, one lowercase letter and one number"
+        )
+        .required("Password is required")
+        .min(8, "Password have min 8 characters")
+        .max(32, "Password have max 32 characters"),
+      policy: Yup.boolean().oneOf([true], "Must Accept Terms and Conditions"),
+    }),
+    handleSubmit: (values) => {
+      console.log("hello");
+    },
+  })(Register)
+);

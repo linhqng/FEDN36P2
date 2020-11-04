@@ -27,7 +27,7 @@ function MovieToolbar(props) {
             className={classes.searchInput}
             placeholder="Search movie"
             value={search}
-          //  onChange={onChangeSearch}
+            onChange={onChangeSearch}
           />
           <Button
             onClick={() => OpenAddDialog()}
