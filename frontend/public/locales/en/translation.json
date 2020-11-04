@@ -1,0 +1,16 @@
+{
+    "register": {
+      "title": "Create new account",
+      "desc": "Use your email to create new account... it's free.",
+      "name": "Full name",
+      "username": "User name",
+      "email": "Email address",
+      "phone": "Mobile Phone",
+      "password": "Password",
+      "first-policy": "I have read the",
+      "second-policy": "Terms and Conditions",
+      "btn": "Register now",
+      "question": "Have an account?",
+      "link": "Login"
+    }
+  }
