@@ -3,7 +3,7 @@ const User = require("../../models/user");
 exports.Create_a_user = async (req, res) => {
   try {
     const { role } = req.body;
-    if (role) throw new Error("you cannot set role property.");
+    if (role) throw new Error("You cannot set role property.");
     const user = new User(req.body);
     await user.save();
     const token = await user.generateAuthToken();

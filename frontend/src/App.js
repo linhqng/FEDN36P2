@@ -6,17 +6,15 @@ import { CssBaseline } from "@material-ui/core";
 import theme from "./theme/index";
 import Routes from "./Routes";
 import "typeface-montserrat";
-class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Routes />
-        </ThemeProvider>
-      </Provider>
-    );
-  }
-}
+const App = () => {
+  return (
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Routes />
+      </ThemeProvider>
+    </Provider>
+  );
+};
 
 export default App;

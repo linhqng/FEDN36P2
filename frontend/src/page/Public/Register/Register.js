@@ -1,34 +1,53 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import FileUpload from "../../../components/FileUpload/FileUpload";
-import {
-  Button,
-  Checkbox,
-  Grid,
-  IconButton,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import CustomField from "../../../components/CustomField/CustomField";
+import CustomUpLoad from "../../../components/CustomUpload/CustomUpload";
+import CustomCheckbox from "../../../components/CustomCheckbox/CustomCheckbox";
+import { Button, Grid, IconButton, Typography } from "@material-ui/core";
 import { ArrowBack as ArrowBackIcon } from "@material-ui/icons";
-import { withFormik } from "formik";
+import { Form, Formik } from "formik";
 import * as Yup from "yup";
+import { registerUser } from "../../../redux/actions/auth";
+import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+const validateForm = Yup.object().shape({
+  // Validate form field
+  name: Yup.string()
+    .required("Name is required")
+    .min(5, "Name must have min 5 characters"),
+  username: Yup.string()
+    .required("Username is required")
+    .min(5, "Username must have min 5 characters")
+    .max(16, "Username have max 16 characters"),
+  email: Yup.string().email("Email is invalid").required("Email is required"),
+  phone: Yup.string()
+    .matches(/^(0)+([0-9]{9})\b$/, "Phone number is not valid !")
+    .required("Phone number is required"),
+  password: Yup.string()
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+      "Password must have minimum 8 characters, at least one uppercase letter, one lowercase letter and one number"
+    )
+    .required("Password is required")
+    .min(8, "Password have min 8 characters")
+    .max(32, "Password have max 32 characters"),
+  image: Yup.mixed().required("Avatar is required"),
+  policy: Yup.boolean().oneOf([true], "Must Accept Terms and Conditions"),
+});
 
-const Register = ({
-  classes,
-  history,
-  values,
-  errors,
-  touched,
-  handleChange,
-  handleBlur,
-  isValid,
-  dirty,
-  handleSubmit,
-}) => {
+const Register = ({ classes, history, setSubmitting }) => {
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+  const dispatch = useDispatch();
+
   return (
     <div className={classes.root}>
+      <button onClick={() => changeLanguage("vi")}>vi</button>
+      <button onClick={() => changeLanguage("en")}>en</button>
       <Grid className={classes.grid} container>
         <Grid className={classes.bgWrapper} item lg={5}>
           <div className={classes.bg} />
@@ -46,130 +65,105 @@ const Register = ({
               </IconButton>
             </div>
             <div className={classes.contentBody}>
-              <form className={classes.form} onSubmit={handleSubmit}>
-                <Typography className={classes.title} variant="h2">
-                  Create new account
-                </Typography>
-                <Typography className={classes.subtitle} variant="body1">
-                  Use your email to create new account... it's free.
-                </Typography>
-                <div className={classes.fields}>
-                  <TextField
-                    className={classes.textField}
-                    label="Full name"
-                    name="name"
-                    variant="outlined"
-                    onChange={handleChange}
-                    value={values.name}
-                    error={errors.name && touched.name ? true : false}
-                    helperText={
-                      errors.name && touched.name ? errors.name : null
-                    }
-                    onBlur={handleBlur}
-                  />
-                  <TextField
-                    className={classes.textField}
-                    label="User name"
-                    name="username"
-                    variant="outlined"
-                    onChange={handleChange}
-                    value={values.username}
-                    error={errors.username && touched.username ? true : false}
-                    helperText={
-                      errors.username && touched.username
-                        ? errors.username
-                        : null
-                    }
-                    onBlur={handleBlur}
-                  />
-                  <TextField
-                    className={classes.textField}
-                    label="Email address"
-                    name="email"
-                    variant="outlined"
-                    onChange={handleChange}
-                    value={values.email}
-                    error={errors.email && touched.email ? true : false}
-                    helperText={
-                      errors.email && touched.email ? errors.email : null
-                    }
-                    onBlur={handleBlur}
-                  />
-                  <TextField
-                    className={classes.textField}
-                    label="Mobile Phone"
-                    name="phone"
-                    variant="outlined"
-                    onChange={handleChange}
-                    value={values.phone}
-                    error={errors.phone && touched.phone ? true : false}
-                    helperText={
-                      errors.phone && touched.phone ? errors.phone : null
-                    }
-                    onBlur={handleBlur}
-                  />
-                  <TextField
-                    className={classes.textField}
-                    label="Password"
-                    type="password"
-                    name="password"
-                    variant="outlined"
-                    onChange={handleChange}
-                    value={values.password}
-                    error={errors.password && touched.password ? true : false}
-                    helperText={
-                      errors.password && touched.password
-                        ? errors.password
-                        : null
-                    }
-                    onBlur={handleBlur}
-                  />
-                  <FileUpload
-                    className={classes.upload}
-                    file={values.image}
-                    name="image"
-                    onUpload={handleChange}
-                  />
-                  <div className={classes.policy}>
-                    <Checkbox
-                      className={classes.policyCheckbox}
+              <Formik
+                initialValues={{
+                  name: "",
+                  username: "",
+                  email: "",
+                  phone: "",
+                  password: "",
+                  image: null,
+                  policy: false,
+                }}
+                validationSchema={validateForm}
+                onSubmit={(values) => {
+                  dispatch(registerUser(values));
+                  setSubmitting(false);
+                }}
+              >
+                {(propsForm) => (
+                  <Form className={classes.form}>
+                    <Typography className={classes.title} variant="h2">
+                      {t("register.title")}
+                    </Typography>
+                    <Typography className={classes.subtitle} variant="body1">
+                      {t("register.desc")}
+                    </Typography>
+                    <div className={classes.fields}>
+                      <CustomField
+                        className={classes.textField}
+                        label={t("register.name")}
+                        name="name"
+                        variant="outlined"
+                      />
+                      <CustomField
+                        className={classes.textField}
+                        label={t("register.username")}
+                        name="username"
+                        variant="outlined"
+                      />
+                      <CustomField
+                        className={classes.textField}
+                        label={t("register.email")}
+                        name="email"
+                        variant="outlined"
+                      />
+                      <CustomField
+                        className={classes.textField}
+                        label={t("register.phone")}
+                        name="phone"
+                        variant="outlined"
+                      />
+                      <CustomField
+                        className={classes.textField}
+                        label={t("register.password")}
+                        type="password"
+                        name="password"
+                        variant="outlined"
+                      />
+                      <CustomUpLoad
+                        name="image"
+                        className={classes.upload}
+                        label="Upload Avatar"
+                      />
+                      <div className={classes.policy}>
+                        <CustomCheckbox
+                          className={classes.policyCheckbox}
+                          color="primary"
+                          name="policy"
+                        />
+                        <Typography
+                          className={classes.policyText}
+                          variant="body1"
+                        >
+                          {t("register.first-policy")} &nbsp;
+                          <Link className={classes.policyUrl} to="#">
+                            {t("register.second-policy")}
+                          </Link>
+                        </Typography>
+                      </div>
+                    </div>
+
+                    <Button
+                      className={classes.registerButton}
                       color="primary"
-                      name="policy"
-                      checked={values.policy}
-                      onChange={handleChange}
-                      error={errors.policy && touched.policy ? true : false}
-                      helperText={
-                        errors.policy && touched.policy ? errors.policy : null
-                      }
-                      onBlur={handleBlur}
-                    />
-                    <Typography className={classes.policyText} variant="body1">
-                      I have read the &nbsp;
-                      <Link className={classes.policyUrl} to="#">
-                        Terms and Conditions
+                      size="large"
+                      variant="contained"
+                      disabled={!propsForm.isValid || !propsForm.dirty}
+                      type="submit"
+                    >
+                      {t("register.btn")}
+                    </Button>
+
+                    <Typography className={classes.login} variant="body1">
+                      {t("register.question")}{" "}
+                      <Link className={classes.loginUrl} to="/login">
+                        {t("register.link")}
                       </Link>
                     </Typography>
-                  </div>
-                </div>
-
-                <Button
-                  className={classes.registerButton}
-                  color="primary"
-                  size="large"
-                  variant="contained"
-                  disabled={!isValid || !dirty}
-                  type="submit"
-                >
-                  Register now
-                </Button>
-
-                <Typography className={classes.login} variant="body1">
-                  Have an account?{" "}
-                  <Link className={classes.loginUrl} to="/login">
-                    Login
-                  </Link>
-                </Typography>
-              </form>
+                  </Form>
+                )}
+              </Formik>
             </div>
           </div>
         </Grid>
@@ -178,46 +172,4 @@ const Register = ({
   );
 };
 
-export default withStyles(styles)(
-  withFormik({
-    mapPropsToValues() {
-      return {
-        name: "",
-        username: "",
-        email: "",
-        phone: "",
-        password: "",
-        image: null,
-        policy: false,
-      };
-    },
-    validationSchema: Yup.object().shape({
-      // Validate form field
-      name: Yup.string()
-        .required("Name is required")
-        .min(5, "Name must have min 5 characters"),
-      username: Yup.string()
-        .required("Username is required")
-        .min(5, "Username must have min 5 characters")
-        .max(16, "Username have max 16 characters"),
-      email: Yup.string()
-        .email("Email is invalid")
-        .required("Email is required"),
-      phone: Yup.string()
-        .matches(/^(0)+([0-9]{9})\b$/, "Phone number is not valid !")
-        .required("Phone number is required"),
-      password: Yup.string()
-        .matches(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-          "Password must have minimum 8 characters, at least one uppercase letter, one lowercase letter and one number"
-        )
-        .required("Password is required")
-        .min(8, "Password have min 8 characters")
-        .max(32, "Password have max 32 characters"),
-      policy: Yup.boolean().oneOf([true], "Must Accept Terms and Conditions"),
-    }),
-    handleSubmit: (values) => {
-      console.log("hello");
-    },
-  })(Register)
-);
+export default withStyles(styles)(Register);
