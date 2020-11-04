@@ -1,0 +1,16 @@
+{
+  "register": {
+    "title": "Tạo mới tài khoản",
+    "desc": "Sử dụng email của bạn để tạo mới tài khoản... miễn phí.",
+    "name": "Họ tên",
+    "username": "Tên tài khoản",
+    "email": "Đỉa chỉ email",
+    "phone": "Số điện thoại",
+    "password": "Mật khẩu",
+    "first-policy": "Tôi đồng ý với",
+    "second-policy": "Điều khoản và Chính sách",
+    "btn": "Đăng ký",
+    "question": "Đã có tài khoản?",
+    "link": "Đăng nhập"
+  }
+}
