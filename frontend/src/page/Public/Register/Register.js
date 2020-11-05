@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
@@ -12,8 +12,8 @@ import * as Yup from "yup";
 import { registerUser } from "../../../redux/actions/auth";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
+import { connect } from "react-redux";
 const validateForm = Yup.object().shape({
-  // Validate form field
   name: Yup.string()
     .required("Name is required")
     .min(5, "Name must have min 5 characters"),
@@ -37,12 +37,23 @@ const validateForm = Yup.object().shape({
   policy: Yup.boolean().oneOf([true], "Must Accept Terms and Conditions"),
 });
 
-const Register = ({ classes, history, setSubmitting }) => {
+const Register = ({
+  classes,
+  history,
+  setSubmitting,
+  resetForm,
+  isAuthenticated,
+}) => {
   const { t, i18n } = useTranslation();
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (isAuthenticated) {
+      history.push("/");
+    }
+  }, [isAuthenticated]);
 
   return (
     <div className={classes.root}>
@@ -78,6 +89,7 @@ const Register = ({ classes, history, setSubmitting }) => {
                 validationSchema={validateForm}
                 onSubmit={(values) => {
                   dispatch(registerUser(values));
+                  resetForm({});
                   setSubmitting(false);
                 }}
               >
@@ -171,5 +183,8 @@ const Register = ({ classes, history, setSubmitting }) => {
     </div>
   );
 };
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.authState.isAuthenticated,
+});
 
-export default withStyles(styles)(Register);
+export default withStyles(styles)(connect(mapStateToProps)(Register));

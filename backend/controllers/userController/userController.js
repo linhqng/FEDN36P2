@@ -49,6 +49,35 @@ exports.Login = async (req, res, next) => {
     });
   }
 };
+exports.Login_with_fb = async (req, res) => {
+  try {
+    const { email, userID, name, phone } = req.body;
+    const nameArray = name.split(" ");
+    const user = await User.findOne({ username: nameArray.join("") + userID });
+    if (!user) {
+      const newUser = new User({
+        name,
+        username: nameArray.join("") + userID,
+        email,
+        facebook: userID,
+        phone: "Unknown phone",
+      });
+      try {
+        await newUser.save();
+        const token = await newUser.generateAuthToken();
+        res.status(201).send({ user: newUser, token });
+      } catch (e) {
+        res.status(400).send(e);
+      }
+    } else {
+      const token = await user.generateAuthToken();
+      res.send({ user, token });
+    }
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};
+
 exports.Logout = async (req, res, next) => {
   try {
     req.user.tokens = req.user.tokens.filter((token) => {
