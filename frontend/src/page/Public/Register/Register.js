@@ -11,39 +11,9 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { registerUser } from "../../../redux/actions/auth";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
-import { connect } from "react-redux";
-const validateForm = Yup.object().shape({
-  name: Yup.string()
-    .required("Name is required")
-    .min(5, "Name must have min 5 characters"),
-  username: Yup.string()
-    .required("Username is required")
-    .min(5, "Username must have min 5 characters")
-    .max(16, "Username have max 16 characters"),
-  email: Yup.string().email("Email is invalid").required("Email is required"),
-  phone: Yup.string()
-    .matches(/^(0)+([0-9]{9})\b$/, "Phone number is not valid !")
-    .required("Phone number is required"),
-  password: Yup.string()
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-      "Password must have minimum 8 characters, at least one uppercase letter, one lowercase letter and one number"
-    )
-    .required("Password is required")
-    .min(8, "Password have min 8 characters")
-    .max(32, "Password have max 32 characters"),
-  image: Yup.mixed().required("Avatar is required"),
-  policy: Yup.boolean().oneOf([true], "Must Accept Terms and Conditions"),
-});
+import { useDispatch, connect } from "react-redux";
 
-const Register = ({
-  classes,
-  history,
-  setSubmitting,
-  resetForm,
-  isAuthenticated,
-}) => {
+const Register = ({ classes, history, setSubmitting, isAuthenticated }) => {
   const { t, i18n } = useTranslation();
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
@@ -86,10 +56,34 @@ const Register = ({
                   image: null,
                   policy: false,
                 }}
-                validationSchema={validateForm}
+                validationSchema={Yup.object().shape({
+                  // Validate form field
+                  name: Yup.string()
+                    .required(t("validate.nameRq"))
+                    .min(5, t("validate.nameMin")),
+                  username: Yup.string()
+                    .required(t("validate.usernameRq"))
+                    .min(5, t("validate.usernameMin"))
+                    .max(16, t("validate.usernameMax")),
+                  email: Yup.string()
+                    .email(t("validate.emailInvalid"))
+                    .required(t("validate.emailRq")),
+                  phone: Yup.string()
+                    .matches(/^(0)+([0-9]{9})\b$/, t("validate.phoneInvalid"))
+                    .required(t("validate.phoneRq")),
+                  password: Yup.string()
+                    .matches(
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+                      t("validate.passwordDesc")
+                    )
+                    .required(t("validate.passwordRq"))
+                    .min(8, t("validate.passwordMin"))
+                    .max(32, t("validate.passwordMax")),
+                  image: Yup.mixed().required(t("validate.avatarRq")),
+                  policy: Yup.boolean().oneOf([true], t("validate.policyRq")),
+                })}
                 onSubmit={(values) => {
                   dispatch(registerUser(values));
-                  resetForm({});
                   setSubmitting(false);
                 }}
               >

@@ -13,7 +13,7 @@ const initialState = {
   token: localStorage.getItem("jwtToken"),
   isAuthenticated: isLoggedIn(),
   loading: true,
-  user: getUser(),
+  user: isLoggedIn() ? getUser() : null,
 };
 
 export default (state = initialState, action) => {

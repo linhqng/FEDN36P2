@@ -10,7 +10,9 @@ exports.Create_a_showtime = async (req, res, next) => {
 };
 exports.Get_all_showtimes = async (req, res, next) => {
   try {
-    const showtimes = await Showtime.find({}).populate("movieId cinemaId").exec();;
+    const showtimes = await Showtime.find({})
+      .populate("movieId cinemaId")
+      .exec();
     res.send(showtimes);
   } catch (e) {
     res.status(400).send(e);

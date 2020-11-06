@@ -86,7 +86,6 @@ exports.Update_movie_by_id = async (req, res, next) => {
     return !movie ? res.sendStatus(404) : res.send(movie);
   } catch (e) {
     console.log(e);
-
     return res.status(400).send(e);
   }
 };

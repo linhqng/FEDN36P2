@@ -52,7 +52,6 @@ const movieSchema = new mongoose.Schema(
 );
 movieSchema.index({ "$**": "text" });
 
-
 const Movie = mongoose.model("movies", movieSchema);
 
 module.exports = Movie;

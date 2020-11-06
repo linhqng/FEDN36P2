@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 const showtimeSchema = new Schema({
@@ -17,16 +17,16 @@ const showtimeSchema = new Schema({
   },
   movieId: {
     type: Schema.Types.ObjectId,
-    ref: 'movies',
+    ref: "movies",
     required: true,
   },
   cinemaId: {
     type: Schema.Types.ObjectId,
-    ref: 'cinemas',
+    ref: "cinemas",
     required: true,
   },
 });
 
-const Showtime = mongoose.model('showtimes', showtimeSchema);
+const Showtime = mongoose.model("showtimes", showtimeSchema);
 
 module.exports = Showtime;

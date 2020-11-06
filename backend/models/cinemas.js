@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
@@ -31,6 +31,6 @@ const cinemaSchema = new Schema({
   },
 });
 cinemaSchema.index({ "$**": "text" });
-const Cinema = mongoose.model('Cinema', cinemaSchema);
+const Cinema = mongoose.model("Cinema", cinemaSchema);
 
 module.exports = Cinema;
