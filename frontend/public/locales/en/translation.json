@@ -1,16 +1,69 @@
 {
-    "register": {
-      "title": "Create new account",
-      "desc": "Use your email to create new account... it's free.",
-      "name": "Full name",
-      "username": "User name",
-      "email": "Email address",
-      "phone": "Mobile Phone",
-      "password": "Password",
-      "first-policy": "I have read the",
-      "second-policy": "Terms and Conditions",
-      "btn": "Register now",
-      "question": "Have an account?",
-      "link": "Login"
+  "register": {
+    "title": "Create new account",
+    "desc": "Use your email to create new account... it's free.",
+    "name": "Full name",
+    "username": "User name",
+    "email": "Email address",
+    "phone": "Mobile Phone",
+    "password": "Password",
+    "first-policy": "I have read the",
+    "second-policy": "Terms and Conditions",
+    "btn": "Register now",
+    "question": "Have an account?",
+    "link": "Login"
+  },
+  "admin": {
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "movies": "Movies",
+      "cinemas": "Cinemas",
+      "showtimes": "Showtimes",
+      "users": "Users",
+      "account": "Account",
+      "reservations": "Reservations"
+    },
+    "movies": {
+      "title": "Title",
+      "genre": "Genre",
+      "language": "Language",
+      "description": "Description",
+      "director": "Director",
+      "cast": "Casts",
+      "duration": "Duration",
+      "releaseDate": "Release Date",
+      "endDate": "End Date",
+      "add": "Add movie",
+      "delete": "Delete movie",
+      "update": "Update movie",
+      "minutes": "minutes",
+      "search": "Search movie",
+      "requiredTitle":"Title is required !",
+      "requiredGenre":"Genre is required !",
+      "requiredLanguage":"Language is required !",
+      "requiredDirector":"Director is required !",
+      "requiredCast":"Cast is required ! !",
+      "requiredDuration":"Duration is required !",
+      "requỉedDescription":"Description is required !"
+    },
+    "cinemas": {
+      "add": "Add cinema",
+      "update": "Update cinema",
+      "delete": "Delete cinema",
+      "name": "Name cinema",
+      "city": "City",
+      "ticketPrice": "Price",
+      "seatsAvailable": "Seats",
+      "addRow": "Add seat row",
+      "seatsOfRow": "Add  number of seats for row : ",
+      "permovie": "Per movie",
+      "seats": "Seats",
+      "remove": "Remove",
+      "search": "Search cinema",
+      "requiredName": "Name is required !",
+      "requiredCity": "City is required !",
+      "requiredTicketPrice": "Price is required !",
+      "requireSeatsAvailable": "Number of seats is required !"
     }
   }
+}

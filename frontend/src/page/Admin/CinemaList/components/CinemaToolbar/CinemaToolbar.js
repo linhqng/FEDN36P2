@@ -1,33 +1,36 @@
-import React, { Fragment, useState } from "react";
+import React, { Component, Fragment, useState } from "react";
 import PropTypes from "prop-types";
-import { Button, withStyles } from "@material-ui/core";
-import SearchInput from "../../../../../components/SearchInput/SearchInput";
+import classNames from "classnames";
+import { withStyles } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import styles from "./styles";
 import ResponsiveDialog from "../../../../../components/ReponsiveDialog/ReponsiveDialog";
-import AddMovie from "../AddMovie/AddMovie";
+import SearchInput from "../../../../../components/SearchInput/SearchInput";
+import AddCinema from "../AddCinema/AddCinema";
 import { useTranslation } from "react-i18next";
-MovieToolbar.propTypes = {
-  className: PropTypes.string,
-  classes: PropTypes.object.isRequired,
-};
 
-function MovieToolbar(props) {
-  const { t } = useTranslation();
-  const [openAddDialog, setOpenDialog] = useState(false);
+
+
+const CinemaToolbar = (props) => {
+  const [openAddDialog, setopenAddDialog] = useState(false);
   const { classes, className, search, onChangeSearch } = props;
+  const {t} = useTranslation();
   const OpenAddDialog = () => {
-    setOpenDialog(true);
+    setopenAddDialog(true);
   };
+
   const CloseAddDialog = () => {
-    setOpenDialog(false);
+    setopenAddDialog(false);
   };
+  const rootClassName = classNames(classes.root, className);
+
   return (
     <Fragment>
-      <div className={classes.root}>
+      <div className={rootClassName}>
         <div className={classes.row}>
           <SearchInput
             className={classes.searchInput}
-            placeholder={t("admin.movies.search")}
+            placeholder={t("admin.cinemas.search")}
             value={search}
             onChange={onChangeSearch}
           />
@@ -37,19 +40,24 @@ function MovieToolbar(props) {
             size="small"
             variant="outlined"
           >
-            {t("admin.movies.add")}
+            {t("admin.cinemas.add")}
           </Button>
         </div>
       </div>
       <ResponsiveDialog
-        id="Add-movie"
+        id="Add-cinema"
         open={openAddDialog}
         handleClose={() => CloseAddDialog()}
       >
-        <AddMovie />
+       <AddCinema></AddCinema>
       </ResponsiveDialog>
     </Fragment>
   );
-}
+};
 
-export default withStyles(styles)(MovieToolbar);
+CinemaToolbar.propTypes = {
+  className: PropTypes.string,
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(CinemaToolbar);

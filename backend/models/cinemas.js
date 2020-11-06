@@ -30,7 +30,7 @@ const cinemaSchema = new Schema({
     type: String,
   },
 });
-
+cinemaSchema.index({ "$**": "text" });
 const Cinema = mongoose.model('Cinema', cinemaSchema);
 
 module.exports = Cinema;

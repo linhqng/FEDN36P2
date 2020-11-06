@@ -1,15 +1,25 @@
-import { Divider, List, ListItem, ListItemIcon, ListItemText, ListSubheader, withStyles } from "@material-ui/core";
+import {
+  Divider,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListSubheader,
+  withStyles,
+} from "@material-ui/core";
 import AccountBoxIcon from "@material-ui/icons/AccountBoxOutlined";
 import DashboardIcon from "@material-ui/icons/DashboardOutlined";
 import InfoIcon from "@material-ui/icons/InfoOutlined";
 import PeopleIcon from "@material-ui/icons/PeopleOutlined";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import styles from "./styles";
 Sidebar.propTypes = {};
 
 function Sidebar(props) {
   const { classes } = props;
+  const { t } = useTranslation();
   return (
     <section className={classes.root}>
       <List component="div" disablePadding>
@@ -24,8 +34,10 @@ function Sidebar(props) {
           </ListItemIcon>
           <ListItemText
             classes={{ primary: classes.listItemText }}
-            primary="Dashboard"
-          />
+            //  primary={t("admin.sidebar.dashboard")}
+          >
+            {t("admin.sidebar.dashboard")}
+          </ListItemText>
         </ListItem>
         <ListItem
           activeClassName={classes.activeListItem}
@@ -38,7 +50,7 @@ function Sidebar(props) {
           </ListItemIcon>
           <ListItemText
             classes={{ primary: classes.listItemText }}
-            primary="Movies"
+            primary={t("admin.sidebar.movies")}
           />
         </ListItem>
         <ListItem
@@ -52,7 +64,7 @@ function Sidebar(props) {
           </ListItemIcon>
           <ListItemText
             classes={{ primary: classes.listItemText }}
-            primary="Cinemas"
+            primary={t("admin.sidebar.cinemas")}
           />
         </ListItem>
         <ListItem
@@ -66,7 +78,7 @@ function Sidebar(props) {
           </ListItemIcon>
           <ListItemText
             classes={{ primary: classes.listItemText }}
-            primary="Showtimes"
+            primary={t("admin.sidebar.showtimes")}
           />
         </ListItem>
         <ListItem
@@ -80,7 +92,7 @@ function Sidebar(props) {
           </ListItemIcon>
           <ListItemText
             classes={{ primary: classes.listItemText }}
-            primary="Reservations"
+            primary={t("admin.sidebar.reservations")}
           />
         </ListItem>
         {/* {user && user.role === 'superadmin' && ( */}
@@ -95,7 +107,7 @@ function Sidebar(props) {
           </ListItemIcon>
           <ListItemText
             classes={{ primary: classes.listItemText }}
-            primary="Users"
+            primary={t("admin.sidebar.users")}
           />
         </ListItem>
         {/* )} */}
@@ -110,35 +122,12 @@ function Sidebar(props) {
           </ListItemIcon>
           <ListItemText
             classes={{ primary: classes.listItemText }}
-            primary="Account"
+            primary={t("admin.sidebar.account")}
           />
         </ListItem>
       </List>
       <Divider className={classes.listDivider} />
-      <List
-        component="div"
-        disablePadding
-        subheader={
-          <ListSubheader className={classes.listSubheader}>
-            Support
-          </ListSubheader>
-        }
-      >
-        <ListItem
-          className={classes.listItem}
-          component="a"
-          href="http://georgesimos.com"
-          target="_blank"
-        >
-          <ListItemIcon className={classes.listItemIcon}>
-            <InfoIcon />
-          </ListItemIcon>
-          <ListItemText
-            classes={{ primary: classes.listItemText }}
-            primary="Customer support"
-          />
-        </ListItem>
-      </List>
+     
     </section>
   );
 }

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Loading from "./components/Loading/Loading";
 import AdminLayout from "./layouts/AdminLayout/components/AdminLayout";
+
 import ProtectedRoute from "./routers/ProtectedRoute";
 
 const Login = lazy(() => import("./page/Public/Login/Login"));
@@ -10,6 +11,7 @@ const Register = lazy(() => import("./page/Public/Register/Register"));
 
 const DashboardPage = lazy(() => import("./page/Admin/Dashboard/Dashboard"));
 const MovieList = lazy(() => import("./page/Admin/MovieList/MovieList"));
+const CinemaList = lazy(() => import("./page/Admin/CinemaList/CinemaList"));
 const Routes = () => {
   return (
     <Suspense fallback={<Loading />}>
@@ -30,6 +32,12 @@ const Routes = () => {
             layout={AdminLayout}
             component={MovieList}
           />
+          <ProtectedRoute
+            exact
+            path="/admin/cinemas"
+            layout={AdminLayout}
+            component={CinemaList}
+          ></ProtectedRoute>
         </Switch>
       </Router>
     </Suspense>
