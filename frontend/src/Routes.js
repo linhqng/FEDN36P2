@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Loading from "./components/Loading/Loading";
-import AdminLayout from "./layouts/AdminLayout/components/AdminLayout";
+import AdminLayout from "./layouts/AdminLayout/AdminLayout";
 
 import ProtectedRoute from "./routers/ProtectedRoute";
 
@@ -12,6 +12,7 @@ const Register = lazy(() => import("./page/Public/Register/Register"));
 const DashboardPage = lazy(() => import("./page/Admin/Dashboard/Dashboard"));
 const MovieList = lazy(() => import("./page/Admin/MovieList/MovieList"));
 const CinemaList = lazy(() => import("./page/Admin/CinemaList/CinemaList"));
+const ShowtimeList = lazy(()=> import("./page/Admin/ShowtimeList/ShowtimeList"))
 const Routes = () => {
   return (
     <Suspense fallback={<Loading />}>
@@ -37,6 +38,12 @@ const Routes = () => {
             path="/admin/cinemas"
             layout={AdminLayout}
             component={CinemaList}
+          ></ProtectedRoute>
+          <ProtectedRoute
+            exact
+            path="/admin/showtimes"
+            layout={AdminLayout}
+            component={ShowtimeList}
           ></ProtectedRoute>
         </Switch>
       </Router>
