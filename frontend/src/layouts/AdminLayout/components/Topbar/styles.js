@@ -11,7 +11,9 @@ export default theme => ({
     toolbar: {
       minHeight: 'auto',
       width: '100%',
-      paddingLeft: 0
+      paddingLeft: 0,
+      display: 'flex',
+      justifyContent: 'space-between',
     },
     brandWrapper: {
       background: theme.palette.default.dark,

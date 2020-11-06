@@ -1,10 +1,11 @@
 import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import { Drawer, withStyles } from "@material-ui/core";
-import Topbar from "./Topbar/Topbar";
-import Sidebar from "./Sidebar/Sidebar";
+
 import styles from './styles'
 import classnames from 'classnames';
+import Topbar from "./components/Topbar/Topbar";
+import Sidebar from "./components/Sidebar/Sidebar";
 AdminLayout.propTypes = {
   children: PropTypes.node,
   isSidebarOpen: PropTypes.bool,

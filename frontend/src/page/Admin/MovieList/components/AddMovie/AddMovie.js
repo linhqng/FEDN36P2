@@ -17,16 +17,22 @@ import {
   removeMovie,
   updateMovie,
 } from "../../../../../redux/actions/movies";
+import { useTranslation } from "react-i18next";
 AddMovie.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object,
   movie: PropTypes.object,
 };
 function AddMovie(props) {
+  const { t } = useTranslation();
   const { classes, className, edit } = props;
   const rootClassName = classNames(classes.root, className);
-  const subtitle = props.edit ? "Edit Movie" : "Add Movie";
-  const submitButton = props.edit ? "Update Movie" : "Add Movie";
+  const subtitle = props.edit
+    ? t("admin.movies.update")
+    : t("admin.movies.add");
+  const submitButton = props.edit
+    ? t("admin.movies.update")
+    : t("admin.movies.add");
   const dispatch = useDispatch();
   const handleInitialValues = () => {
     if (props.edit) {
@@ -65,15 +71,18 @@ function AddMovie(props) {
       <Formik
         initialValues={handleInitialValues()}
         validationSchema={Yup.object().shape({
-          title: Yup.string().required("Title is required !"),
-          genre: Yup.string().required("Genre is required !"),
-          language_movie: Yup.string().required("language_movie is required !"),
-          description: Yup.string().required("Description is required !"),
-          director: Yup.string().required("Director is required !"),
-          cast: Yup.string().required("Cast is required !"),
+          title: Yup.string().required(t("admin.movies.requiredTitle")),
+          genre: Yup.string().required(t("admin.movies.requiredGenre")),
+          language_movie: Yup.string().required(
+            t("admin.movies.requiredLanguage")
+          ),
+          description: Yup.string().required(
+            t("admin.movies.requiredDescription")
+          ),
+          director: Yup.string().required(t("admin.movies.requiredDirector")),
+          cast: Yup.string().required(t("admin.movies.requiredCast")),
           duration: Yup.number()
-            .min(50, "Min 50 minutes")
-            .required("Duration is required !"),
+          .required(t("admin.movies.requiredDuration")),
         })}
         onSubmit={(values) => {
           const { image, ...rest } = values;
@@ -98,7 +107,7 @@ function AddMovie(props) {
                       : null
                   }
                   className={classes.textField}
-                  label="Title"
+                  label={t("admin.movies.title")}
                   margin="dense"
                   name="title"
                   required
@@ -119,7 +128,7 @@ function AddMovie(props) {
                       : null
                   }
                   className={classes.textField}
-                  label="genre"
+                  label={t("admin.movies.genre")}
                   margin="dense"
                   name="genre"
                   required
@@ -142,7 +151,7 @@ function AddMovie(props) {
                       : null
                   }
                   className={classes.textField}
-                  label="language_movie"
+                  label={t("admin.movies.language")}
                   margin="dense"
                   name="language_movie"
                   required
@@ -165,7 +174,7 @@ function AddMovie(props) {
                       : null
                   }
                   className={classes.textField}
-                  label="description"
+                  label={t("admin.movies.description")}
                   margin="dense"
                   name="description"
                   required
@@ -188,7 +197,7 @@ function AddMovie(props) {
                       : null
                   }
                   className={classes.textField}
-                  label="director"
+                  label={t("admin.movies.director")}
                   margin="dense"
                   name="director"
                   required
@@ -207,7 +216,7 @@ function AddMovie(props) {
                       : null
                   }
                   className={classes.textField}
-                  label="cast"
+                  label={t("admin.movies.cast")}
                   margin="dense"
                   name="cast"
                   required
@@ -232,7 +241,7 @@ function AddMovie(props) {
                   }
                   type="number"
                   className={classes.textField}
-                  label="duration"
+                  label={t("admin.movies.duration")}
                   margin="dense"
                   name="duration"
                   required
@@ -245,12 +254,11 @@ function AddMovie(props) {
               <div className={classes.field}>
                 <MuiPickersUtilsProvider utils={MomentUtils}>
                   <KeyboardDatePicker
-                    minDate={new Date()}
                     className={classes.textField}
                     inputVariant="outlined"
                     margin="normal"
                     id="release-date"
-                    label="Release Date"
+                    label={t("admin.movies.releaseDate")}
                     name="releaseDate"
                     value={props.values.releaseDate}
                     onChange={(date) =>
@@ -263,11 +271,10 @@ function AddMovie(props) {
 
                   <KeyboardDatePicker
                     className={classes.textField}
-                    minDate={new Date()}
                     inputVariant="outlined"
                     margin="normal"
                     id="end-date"
-                    label="End Date"
+                    label={t("admin.movies.endDate")}
                     name="endDate"
                     value={props.values.endDate}
                     onChange={(date) => props.setFieldValue("endDate", date._d)}
@@ -305,7 +312,7 @@ function AddMovie(props) {
                     dispatch(removeMovie(edit._id));
                   }}
                 >
-                  Delete Movie
+                  {t("admin.movies.delete")}
                 </Button>
               )}
             </Form>

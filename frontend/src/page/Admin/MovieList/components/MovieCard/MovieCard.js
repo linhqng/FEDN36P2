@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { makeStyles, Paper } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 import { AccessTime as AccessTimeIcon } from "@material-ui/icons";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function MovieCard(props) {
+  const { t } = useTranslation();
   const classes = useStyles(props);
   const { className, movie } = props;
   const [src, setSrc] = useState("");
@@ -63,11 +65,14 @@ function MovieCard(props) {
     setSrc(props.movie.image);
   }, [props.movie]);
   const rootClassName = classNames(classes.root, className);
-  
+  const image =
+    src && movie.image
+      ? movie.image
+      : "https://source.unsplash.com/featured/?cinema";
   return (
     <Paper className={rootClassName}>
       <div className={classes.imageWrapper}>
-        <img alt="movie" className={classes.image} src={src} />
+        <img alt="movie" className={classes.image} src={image} />
       </div>
       <div className={classes.details}>
         <Typography className={classes.title} variant="h4">
@@ -80,7 +85,7 @@ function MovieCard(props) {
       <div className={classes.stats}>
         <AccessTimeIcon className={classes.updateIcon} />
         <Typography className={classes.updateText} variant="body2">
-          {movie.duration} minutes
+          {movie.duration} {t("admin.movies.minutes")}
         </Typography>
       </div>
     </Paper>
