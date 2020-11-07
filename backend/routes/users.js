@@ -28,7 +28,7 @@ router.post("/login/facebook", Login_with_fb);
 //logout
 router.post("/logout", auth.simple, Logout);
 //get infor me
-router.post("/me", auth.simple, Get_infor_me);
+router.get("/me", auth.simple, Get_infor_me);
 //Get all user by admin
 router.get("/", auth.enhance, Get_all_users_by_admin);
 

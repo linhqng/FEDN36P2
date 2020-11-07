@@ -4,11 +4,13 @@ import { Button, withStyles } from "@material-ui/core";
 import ResponsiveDialog from "../../../../../components/ReponsiveDialog/ReponsiveDialog";
 import AddShowtime from "../AddShowtime/AddShowtime";
 import styles from "./styles";
+import { useTranslation } from "react-i18next";
 ShowtimeToolbar.propTypes = {};
 
 function ShowtimeToolbar(props) {
   const { classes } = props;
   const [openAddDialog, setopenAddDialog] = useState(false);
+  const {t} = useTranslation();
   const OpenAddDialog = () => {
     setopenAddDialog(true);
   };
@@ -26,7 +28,7 @@ function ShowtimeToolbar(props) {
             size="small"
             variant="outlined"
           >
-            ADD
+            {t("admin.showtimes.add")}
           </Button>
         </div>
         <ResponsiveDialog

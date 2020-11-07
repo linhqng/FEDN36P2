@@ -85,6 +85,48 @@ function Sidebar(props) {
           activeClassName={classes.activeListItem}
           className={classes.listItem}
           component={NavLink}
+          to="/admin/promotions"
+        >
+          <ListItemIcon className={classes.listItemIcon}>
+            <DashboardIcon />
+          </ListItemIcon>
+          <ListItemText
+            classes={{ primary: classes.listItemText }}
+            primary={t("admin.sidebar.promotions")}
+          />
+        </ListItem>
+        <ListItem
+          activeClassName={classes.activeListItem}
+          className={classes.listItem}
+          component={NavLink}
+          to="/admin/contacts"
+        >
+          <ListItemIcon className={classes.listItemIcon}>
+            <DashboardIcon />
+          </ListItemIcon>
+          <ListItemText
+            classes={{ primary: classes.listItemText }}
+            primary={t("admin.sidebar.contacts")}
+          />
+        </ListItem>
+        <ListItem
+          activeClassName={classes.activeListItem}
+          className={classes.listItem}
+          component={NavLink}
+          to="/admin/cinemas"
+        >
+          <ListItemIcon className={classes.listItemIcon}>
+            <DashboardIcon />
+          </ListItemIcon>
+          <ListItemText
+            classes={{ primary: classes.listItemText }}
+            primary={t("admin.sidebar.cinemas")}
+          />
+        </ListItem>
+        <ListItem
+          activeClassName={classes.activeListItem}
+          className={classes.listItem}
+          component={NavLink}
           to="/admin/reservations"
         >
           <ListItemIcon className={classes.listItemIcon}>
@@ -127,7 +169,6 @@ function Sidebar(props) {
         </ListItem>
       </List>
       <Divider className={classes.listDivider} />
-     
     </section>
   );
 }

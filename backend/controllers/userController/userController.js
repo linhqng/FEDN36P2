@@ -106,7 +106,7 @@ exports.Get_all_users_by_admin = async (req, res, next) => {
       error: "Only the god can see all the users!",
     });
   try {
-    const users = await User.find({});
+    const users = await User.find({role:{$ne:"superadmin"}});
     res.send(users);
   } catch (e) {
     res.status(400).send(e);

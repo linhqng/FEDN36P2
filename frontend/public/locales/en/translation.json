@@ -41,7 +41,9 @@
       "showtimes": "Showtimes",
       "users": "Users",
       "account": "Account",
-      "reservations": "Reservations"
+      "reservations": "Reservations",
+      "promotions": "Promotions",
+      "contacts": "Contacts"
     },
     "movies": {
       "title": "Title",
@@ -58,13 +60,13 @@
       "update": "Update movie",
       "minutes": "minutes",
       "search": "Search movie",
-      "requiredTitle":"Title is required !",
-      "requiredGenre":"Genre is required !",
-      "requiredLanguage":"Language is required !",
-      "requiredDirector":"Director is required !",
-      "requiredCast":"Cast is required ! !",
-      "requiredDuration":"Duration is required !",
-      "requỉedDescription":"Description is required !"
+      "requiredTitle": "Title is required !",
+      "requiredGenre": "Genre is required !",
+      "requiredLanguage": "Language is required !",
+      "requiredDirector": "Director is required !",
+      "requiredCast": "Cast is required ! !",
+      "requiredDuration": "Duration is required !",
+      "requỉedDescription": "Description is required !"
     },
     "cinemas": {
       "add": "Add cinema",
@@ -84,6 +86,54 @@
       "requiredCity": "City is required !",
       "requiredTicketPrice": "Price is required !",
       "requireSeatsAvailable": "Number of seats is required !"
+    },
+    "showtimes": {
+      "tableName": "List showtime",
+      "add": "Add showtime",
+      "update": "Update showtime",
+      "delete": "Delete showtime",
+      "requiredTime": "Time is required !",
+      "requiredMovie": "Movie is required !",
+      "requiredCinema": "Cinema is required !",
+      "time": "Start at",
+      "movie": "Select movie",
+      "cinema": "Select cinema",
+      "startDate": "Start date",
+      "endDate": "End date"
+    },
+    "users": {
+      "tableName": "List users",
+      "name": "Name",
+      "phone": "Phone number",
+      "email": "Email address",
+      "username": "User name",
+      "detail": "User detail",
+      "update": "Update user"
+    },
+    "dashboard": {
+      "totalUsers": "Total Users",
+      "totalMovies": "Total Movies",
+      "totalCinemas": "Total Cinemas",
+      "sinceLastMonth": "Since last month"
+    },
+    "account": {
+      "cardName": "Account information",
+      "joinAt": "Join at",
+      "update": "Update information",
+      "save": "Save"
+    },
+    "promotion": {
+      "search": "Search promotion",
+      "add": "Add promotion",
+      "title": "Title",
+      "discount": "Discount",
+      "description": "Description",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "requiredTitle": "Title is required !",
+      "requiredDiscount": "Discount is required !",
+      "requiredDesc": "Desc is required !",
+      "delete": "Delete promotion"
     }
   }
 }
